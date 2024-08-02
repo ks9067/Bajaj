@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Interaction</title>
+    <script>
+        async function getOperationCode() {
+            const response = await fetch('/api/user-data/', {
+                method: 'GET',
+            });
+            const data = await response.json();
+            document.getElementById('operation_code').textContent = data.operation_code;
+        }
+
+        async function sendUserData() {
+            const userData = {
+                status: 'active',
+                user_id: 12345,
+                college_email: 'student@college.edu',
+                college_roll_number: 'CS12345',
+                numbers: [1, 2, 3, 4, 5],
+                alphabets: ['a', 'b', 'c', 'd', 'e'],
+            };
+
+            const response = await fetch('/api/user-data/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userData),
+            });
+
+            const data = await response.json();
+            document.getElementById('post_response').textContent = JSON.stringify(data, null, 2);
+        }
+    </script>
+</head>
+<body>
+    <h1>API Interaction</h1>
+    <button onclick="getOperationCode()">Get Operation Code</button>
+    <p id="operation_code"></p>
+
+    <button onclick="sendUserData()">Send User Data</button>
+    <pre id="post_response"></pre>
+</body>
+</html>
